@@ -32,7 +32,7 @@ class Chord:
     #    ...
     #    return Chord(root, component_indices)
 
-    def __init__(self, root: str, component_indices: list[int]):
+    def __init__(self, root: str, component_indices: tuple[int, ...]):
         self.notes = []
         root_index = chromatic_scale.index(root)  
         for i in component_indices:
