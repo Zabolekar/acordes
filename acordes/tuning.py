@@ -1,11 +1,13 @@
 from typing import Iterator
+from re import compile
 from .chord import Chord
 from . import chromatic_scale
 
+note_finder = compile(r"([A-G]#?)")
 
 class Tuning:
     def __init__(self, description: str):
-        notes = description.split()
+        notes = note_finder.findall(description)
         self.open_strings = [chromatic_scale.index(n) for n in notes]
 
     def _fretted_strings(self, chord: Chord) -> Iterator[list[str]]:

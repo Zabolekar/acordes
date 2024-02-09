@@ -1,10 +1,10 @@
 from acordes import Chord, Tuning
 
 
-ukulele = Tuning('G C E A')
-charango = Tuning('G C E A E')
-rajao = Tuning('D G C E A')
-timple = Tuning('G C E A D')
+ukulele = Tuning('GCEA')
+charango = Tuning('GCEAE')
+rajao = Tuning('DGCEA')
+timple = Tuning('GCEAD')
 
 
 if __name__ == '__main__':
