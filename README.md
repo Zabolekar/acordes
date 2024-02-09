@@ -25,6 +25,11 @@ G  .  .  .  B  .  .  .  .  E  .  .  G
 ---------------------------------------
 ```
 
+Supported chord descriptions are (examples with C as the root note):
+- with two notes: C5, C(no5), Cm(no5)
+- with three notes: C, Cm
+- with four notes: C7, CM7, Cm7, CmM7
+
 # Development
 
 Check types: `mypy acordes`
