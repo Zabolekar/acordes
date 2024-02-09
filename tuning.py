@@ -1,6 +1,6 @@
 from typing import Iterator
 from chord import Chord
-from chromatic_scale import chromatic_scale
+import chromatic_scale
 
 
 class Tuning:
@@ -12,7 +12,7 @@ class Tuning:
         for open_string in self.open_strings:
             fretted_string = []
             for fret in range(13):  # after an octave it just repeats anyway
-                note = chromatic_scale[open_string + fret]
+                note = chromatic_scale.get(open_string + fret)
                 if note in chord.notes:
                     fretted_string.append(note)
                 else:
