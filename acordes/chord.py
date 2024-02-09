@@ -1,5 +1,5 @@
 from re import compile
-import chromatic_scale
+from . import chromatic_scale
 
 
 # intervals in semitones:

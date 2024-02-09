@@ -1,6 +1,6 @@
 from typing import Iterator
-from chord import Chord
-import chromatic_scale
+from .chord import Chord
+from . import chromatic_scale
 
 
 class Tuning:
@@ -26,6 +26,7 @@ class Tuning:
         """
         chord = Chord(chord_name)
         print(f" {chord} ".center(13 * 3, '-'))
+        print(' '.join(f"{i:<2}" for i in range(13)))
         format_row = lambda notes: ' '.join(f"{n:2}" for n in notes)
         rows = [format_row(notes) for notes in self._fretted_strings(chord)]
         for row in reversed(rows):

@@ -1,5 +1,4 @@
-from chord import Chord
-from tuning import Tuning
+from acordes import Chord, Tuning
 
 
 ukulele = Tuning('G C E A')
