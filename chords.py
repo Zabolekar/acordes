@@ -1,4 +1,3 @@
-from __future__ import annotations
 from re import compile
 
 chord_regex = compile(r"([A-G]#?)(.*)$")
@@ -35,19 +34,17 @@ chromatic_scale = ChromaticScale()
 
 
 class Chord:
-    @staticmethod
-    def parse(s: str) -> Chord:
-        root, kind = chord_regex.match(s).groups()
+    def __init__(self, name: str):#
+        self.name = name
+        root, kind = chord_regex.match(name).groups()
         component_indices = chord_kinds[kind]
-        return Chord(root, component_indices)
-
-    def __init__(self, root: str, component_indices: tuple[int, ...]):
         self.notes = []
-        root_index = chromatic_scale.index(root)  
+        root_index = chromatic_scale.index(root)
         for i in component_indices:
             self.notes.append(chromatic_scale[root_index + i])
+
     def __repr__(self):
-        return ' '.join(self.notes)
+        return f"{self.name} = <{' '.join(self.notes)}>"
 
 
 class Tuning:
@@ -68,16 +65,18 @@ class Tuning:
             strings.append(fretted_string)
         return strings
 
-    def __call__(self, chord: str) -> str:
+    def __call__(self, chord_name: str) -> str:
         """
         Print the fret diagram.
         # TODO: document the language it accepts.
         """
-        chord = Chord.parse(chord)
+        chord = Chord(chord_name)
+        print(f" {chord} ".center(13 * 3, '-'))
         format_row = lambda notes: ' '.join(f"{n:2}" for n in notes)
         rows = [format_row(notes) for notes in self._fretted_strings(chord)]
         for row in reversed(rows):
             print(row)
+        print("-" * 13 * 3)
 
 
 ukulele = Tuning('G C E A')
@@ -87,14 +86,11 @@ timple = Tuning('G C E A D')
 
 
 if __name__ == '__main__':
-    A = Chord('A', X)
-    Am7 = Chord('A', Xm7)
-    G = Chord('G', X)
-    print(A)
-    print(Am7)
-    print(G)
-    print("-" * 50)
-    for chord in "A", "Am7":
-        for tuning in ukulele, rajao:
-            tuning(chord)
-            print("-" * 50)
+    for s in 'A', 'Am7', 'G':
+        print(Chord(s))
+    print("Ukulele:")
+    ukulele('A')
+    ukulele('Am7')
+    print("Rajão:")
+    rajao('A')
+    rajao('Am7')
