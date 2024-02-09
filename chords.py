@@ -1,3 +1,8 @@
+from __future__ import annotations
+from re import compile
+
+chord_regex = compile(r"([A-G]#?)(.*)$")
+
 # intervals in semitones:
 U, m2, M2, m3, M3, P4, A4, P5, m6, M6, m7, M7 = range(12)
 
@@ -14,6 +19,9 @@ Xm7 = (U, m3, P5, m7)
 XmM7 = (U, m3, P5, M7)
 
 
+chord_kinds = {"5": X5, "(no5)": Xno5, "m(no5)": Xmno5, "": X, "m": Xm, "7": X7, "M7": XM7, "m7": Xm7, "mM7": XmM7 }
+
+
 class ChromaticScale:
     def __init__(self):
         self._notes = ('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B')
@@ -27,10 +35,11 @@ chromatic_scale = ChromaticScale()
 
 
 class Chord:
-    #@staticmethod
-    #def parse(cls, s: str) -> Chord:
-    #    ...
-    #    return Chord(root, component_indices)
+    @staticmethod
+    def parse(s: str) -> Chord:
+        root, kind = chord_regex.match(s).groups()
+        component_indices = chord_kinds[kind]
+        return Chord(root, component_indices)
 
     def __init__(self, root: str, component_indices: tuple[int, ...]):
         self.notes = []
@@ -59,11 +68,16 @@ class Tuning:
             strings.append(fretted_string)
         return strings
 
-    def fretboard(self, chord: Chord) -> str:
+    def __call__(self, chord: str) -> str:
+        """
+        Print the fret diagram.
+        # TODO: document the language it accepts.
+        """
+        chord = Chord.parse(chord)
         format_row = lambda notes: ' '.join(f"{n:2}" for n in notes)
         rows = [format_row(notes) for notes in self._fretted_strings(chord)]
-        rows.reverse()
-        return '\n'.join(rows)  # TODO: multiline repr does NOT actually work like this
+        for row in reversed(rows):
+            print(row)
 
 
 ukulele = Tuning('G C E A')
@@ -80,7 +94,7 @@ if __name__ == '__main__':
     print(Am7)
     print(G)
     print("-" * 50)
-    for chord in A, Am7:  # TODO: make it accept strings like Am or A(no5) instead. I just want an interface like ukulele("Am7") and it prints
+    for chord in "A", "Am7":
         for tuning in ukulele, rajao:
-            print(tuning.fretboard(chord))
+            tuning(chord)
             print("-" * 50)
