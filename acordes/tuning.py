@@ -7,7 +7,7 @@ class Tuning:
     def __init__(self, description: str):
         self.open_strings = parse_notes(description)
 
-    def _fretted_strings(self, chord: Chord) -> Iterator[list[Note]]:
+    def _fretted_strings(self, chord: Chord) -> Iterator[list[Note|None]]:
         for open_string in self.open_strings:
             fretted_string: list[Note|None] = []
             for fret in range(13):  # after an octave it just repeats anyway
@@ -31,6 +31,6 @@ class Tuning:
         print("-" * 13 * 3)
 
 
-def _format_row(notes: list[Note]) -> str:
-    frets = (f'{n}' if n else '.' for n in notes)
+def _format_row(notes: list[Note|None]) -> str:
+    frets = (f'{n}' if n is not None else '.' for n in notes)
     return ' '.join(f"{f:2}" for f in frets)

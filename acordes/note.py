@@ -9,7 +9,7 @@ class Note:
     def __repr__(self) -> str:
         return _note_names[self.value]
 
-    def __eq__(self, other: Note) -> bool:
+    def __eq__(self, other) -> bool:
         return self.value == other.value
 
     def apply_interval(self, interval: int) -> Note:
