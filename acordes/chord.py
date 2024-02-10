@@ -32,8 +32,8 @@ class Chord:
             raise ValueError(f"Can't parse {name}")
 
         root_note = parse_note(root)
-        for component_index in suffix_meanings[suffix]:
-            self.notes.append(root_note.apply_interval(component_index))
+        for interval in suffix_meanings[suffix]:
+            self.notes.append(root_note + interval)
 
     def __repr__(self) -> str:
         return f"{self.name} = <{' '.join(f'{n}' for n in self.notes)}>"

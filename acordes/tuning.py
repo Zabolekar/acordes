@@ -11,7 +11,7 @@ class Tuning:
         for open_string in self.open_strings:
             fretted_string: list[Note|None] = []
             for fret in range(13):  # after an octave it just repeats anyway
-                note = open_string.apply_interval(fret)
+                note = open_string + fret
                 if note in chord.notes:
                     fretted_string.append(note)
                 else:

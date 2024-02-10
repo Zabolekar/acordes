@@ -12,7 +12,7 @@ class Note:
     def __eq__(self, other) -> bool:
         return self.value == other.value
 
-    def apply_interval(self, interval: int) -> Note:
+    def __add__(self, interval: int) -> Note:
         return Note(self.value + interval)
 
 
