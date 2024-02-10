@@ -1,5 +1,5 @@
 from re import compile
-from . import chromatic_scale
+from .note import parse_note
 
 
 # intervals in semitones:
@@ -25,13 +25,15 @@ chord_validator = compile(r"([A-G]#?)(.*)$")
 class Chord:
     def __init__(self, name: str):
         self.name, self.notes = name, []
+
         if match := chord_validator.match(name):
             root, suffix = match.groups()
         else:
             raise ValueError(f"Can't parse {name}")
-        root_index = chromatic_scale.index(root)
-        for component_index in suffix_meanings[suffix]:
-            self.notes.append(chromatic_scale.get(root_index + component_index))
 
-    def __repr__(self):
-        return f"{self.name} = <{' '.join(self.notes)}>"
+        root_note = parse_note(root)
+        for component_index in suffix_meanings[suffix]:
+            self.notes.append(root_note.apply_interval(component_index))
+
+    def __repr__(self) -> str:
+        return f"{self.name} = <{' '.join(f'{n}' for n in self.notes)}>"
