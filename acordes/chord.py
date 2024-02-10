@@ -1,5 +1,5 @@
 from re import compile
-from .note import parse_note
+from .note import Note
 
 
 # intervals in semitones:
@@ -27,13 +27,13 @@ class Chord:
         self.name, self.notes = name, []
 
         if match := chord_validator.match(name):
-            root, suffix = match.groups()
+            root_name, suffix = match.groups()
         else:
             raise ValueError(f"Can't parse {name}")
 
-        root_note = parse_note(root)
+        root = Note(root_name)
         for interval in suffix_meanings[suffix]:
-            self.notes.append(root_note + interval)
+            self.notes.append(root + interval)
 
     def __repr__(self) -> str:
         return f"{self.name} = <{' '.join(f'{n}' for n in self.notes)}>"
