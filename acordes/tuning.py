@@ -1,24 +1,21 @@
 from typing import Iterator
-from re import compile
 from .chord import Chord
-from . import chromatic_scale
+from .note import Note, parse_notes
 
-note_finder = compile(r"([A-G]#?)")
 
 class Tuning:
     def __init__(self, description: str):
-        notes = note_finder.findall(description)
-        self.open_strings = [chromatic_scale.index(n) for n in notes]
+        self.open_strings = parse_notes(description)
 
-    def _fretted_strings(self, chord: Chord) -> Iterator[list[str]]:
+    def _fretted_strings(self, chord: Chord) -> Iterator[list[Note]]:
         for open_string in self.open_strings:
-            fretted_string = []
+            fretted_string: list[Note|None] = []
             for fret in range(13):  # after an octave it just repeats anyway
-                note = chromatic_scale.get(open_string + fret)
+                note = open_string.apply_interval(fret)
                 if note in chord.notes:
                     fretted_string.append(note)
                 else:
-                    fretted_string.append('.')
+                    fretted_string.append(None)
             yield fretted_string
 
     def __call__(self, chord_name: str) -> None:
@@ -28,8 +25,12 @@ class Tuning:
         chord = Chord(chord_name)
         print(f" {chord} ".center(13 * 3, '-'))
         print(' '.join(f"{i:<2}" for i in range(13)))
-        format_row = lambda notes: ' '.join(f"{n:2}" for n in notes)
-        rows = [format_row(notes) for notes in self._fretted_strings(chord)]
+        rows = [_format_row(notes) for notes in self._fretted_strings(chord)]
         for row in reversed(rows):
             print(row)
         print("-" * 13 * 3)
+
+
+def _format_row(notes: list[Note]) -> str:
+    frets = (f'{n}' if n else '.' for n in notes)
+    return ' '.join(f"{f:2}" for f in frets)
