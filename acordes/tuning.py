@@ -21,7 +21,6 @@ class Tuning:
     def __call__(self, chord_name: str) -> None:
         """
         Print the fret diagram.
-        # TODO: document the language it accepts.
         """
         chord = Chord(chord_name)
         print(f" {chord} ".center(13 * 3, '-'))
