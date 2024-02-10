@@ -1,5 +1,4 @@
 from __future__ import annotations
-from re import compile
 
 
 class Note:
@@ -22,11 +21,4 @@ class Note:
         return Note._from_int(self.value + interval)
 
 
-def parse_notes(note_names: str) -> list[Note]:
-    return [Note(name) for name in _note_finder.findall(note_names)]
-
-
 _note_names = 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
-
-
-_note_finder = compile(r"([A-G]#?)")

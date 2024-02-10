@@ -1,11 +1,19 @@
 from typing import Iterator
+from re import compile
 from .chord import Chord
-from .note import Note, parse_notes
+from .note import Note
+
+
+_note_finder = compile(r"([A-G]#?)")
+
+
+def _parse_tuning(description: str) -> list[Note]:
+    return [Note(name) for name in _note_finder.findall(description)]
 
 
 class Tuning:
     def __init__(self, description: str):
-        self.open_strings = parse_notes(description)
+        self.open_strings = _parse_tuning(description)
 
     def _fretted_strings(self, chord: Chord) -> Iterator[list[Note|None]]:
         for open_string in self.open_strings:
