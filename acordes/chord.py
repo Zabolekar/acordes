@@ -3,19 +3,19 @@ from .note import Note
 
 
 # intervals in semitones:
-U, m2, M2, m3, M3, P4, A4, P5, m6, M6, m7, M7 = range(12)
+P1, m2, M2, m3, M3, P4, A4, P5, m6, M6, m7, M7 = range(12)
 
 
 suffix_meanings = {
-    "5": (U, P5),
-    "(no5)": (U, M3),
-    "m(no5)": (U, m3),
-    "": (U, M3, P5),
-    "m": (U, m3, P5),
-    "7": (U, M3, P5, m7),
-    "M7": (U, M3, P5, M7),
-    "m7": (U, m3, P5, m7),
-    "mM7": (U, m3, P5, M7)
+    "5": (P1, P5),
+    "(no5)": (P1, M3),
+    "m(no5)": (P1, m3),
+    "": (P1, M3, P5),
+    "m": (P1, m3, P5),
+    "7": (P1, M3, P5, m7),
+    "M7": (P1, M3, P5, M7),
+    "m7": (P1, m3, P5, m7),
+    "mM7": (P1, m3, P5, M7)
 }
 
 
