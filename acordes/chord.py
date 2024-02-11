@@ -1,4 +1,4 @@
-from re import compile
+import re
 from .note import Note
 
 
@@ -19,7 +19,7 @@ suffix_meanings = {
 }
 
 
-chord_validator = compile(r"([A-G]#?)(.*)$")
+chord_validator = re.compile(r"([A-G]#?)(.*)$")
 
 
 class Chord:
