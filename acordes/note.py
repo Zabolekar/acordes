@@ -27,19 +27,19 @@ note_regex = "[A-G][#b]?"
 
 class Note:
     def __init__(self, note_name: str):
-        self.value = _note_names.index(note_name)
+        self._index = _note_names.index(note_name)
 
     @staticmethod
-    def _from_int(value: int) -> Note:
+    def _from_int(index: int) -> Note:
         note = Note.__new__(Note)
-        note.value = value % 12
+        note._index = index % 12
         return note
 
     def __repr__(self) -> str:
-        return _note_names[self.value]
+        return _note_names[self._index]
 
     def __eq__(self, other) -> bool:
-        return self.value == other.value
+        return self._index == other._index
 
     def __add__(self, interval: int) -> Note:
-        return Note._from_int(self.value + interval)
+        return Note._from_int(self._index + interval)
