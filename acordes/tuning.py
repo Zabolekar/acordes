@@ -1,10 +1,10 @@
 from typing import Iterator
 import re
 from .chord import Chord
-from .note import Note
+from .note import Note, note_regex
 
 
-_note_finder = re.compile(r"([A-G]#?)")
+_note_finder = re.compile(note_regex)
 
 
 def _parse_tuning(description: str) -> list[Note]:

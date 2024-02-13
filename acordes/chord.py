@@ -1,5 +1,5 @@
 import re
-from .note import Note
+from .note import Note, note_regex
 
 
 # intervals in semitones:
@@ -19,14 +19,14 @@ suffix_meanings = {
 }
 
 
-chord_validator = re.compile(r"([A-G]#?)(.*)$")
+chord_regex = re.compile(fr"({note_regex})(.*)$")
 
 
 class Chord:
     def __init__(self, name: str):
         self.name, self.notes = name, []
 
-        if match := chord_validator.match(name):
+        if match := chord_regex.match(name):
             root_name, suffix = match.groups()
         else:
             raise ValueError(f"Can't parse {name}")

@@ -11,6 +11,8 @@ if __name__ == '__main__':
     print("Ukulele:")
     ukulele('A')
     ukulele('Am7')
+    ukulele('G#')
+    ukulele('Ab')
     print("Rajão:")
     rajao('A')
     rajao('Am7')
