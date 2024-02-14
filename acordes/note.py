@@ -21,7 +21,7 @@ class _NoteNames:
             raise ValueError(f"{value!r} not in multituple") from e
 
     def __getitem__(self, i: int) -> str:
-        return self._names[i][0]
+        return self._names[i]
 
 
 _note_names = _NoteNames('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
