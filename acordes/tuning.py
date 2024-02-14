@@ -13,7 +13,11 @@ def _parse_tuning(description: str) -> list[Note]:
 
 class Tuning:
     def __init__(self, description: str):
+        self._repr = f'Tuning("{description}")'
         self.open_strings = _parse_tuning(description)
+
+    def __repr__(self) -> str:
+        return self._repr
 
     def _fretted_strings(self, chord: Chord) -> Iterator[list[Note|None]]:
         for open_string in self.open_strings:
