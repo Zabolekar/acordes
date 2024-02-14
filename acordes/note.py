@@ -1,25 +1,32 @@
 from __future__ import annotations
+from functools import lru_cache
 
 
-class _Multituple:
+class _NoteNames:
     def __init__(self, *values: str|tuple[str, ...]):
-        self._values = []
-        for v in values:
-            self._values.append(v if isinstance(v, tuple) else (v,))
+        self._names: list[str] = []
+        self._indices: dict[str, int] = {}
+        for i, value in enumerate(values):
+            if isinstance(value, tuple):
+                self._names.append(value[0])  # empty tuples not allowed here
+                self._indices |= {name: i for name in value}
+            else:
+                self._names.append(value)
+                self._indices[value] = i
 
     def index(self, value: str) -> int:
-        for i, e in enumerate(self._values):
-            if value in e:
-                return i
-        raise ValueError(f"{value:r} not in multituple")
+        try:
+            return self._indices[value]
+        except KeyError as e:
+            raise ValueError(f"{value!r} not in multituple") from e
 
     def __getitem__(self, i: int) -> str:
-        return self._values[i][0]
+        return self._names[i][0]
 
 
-_note_names = _Multituple('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
-                          'F', ('F#', 'Gb'), 'G', ('G#', 'Ab'), 'A',
-                          ('A#', 'Bb'), 'B')
+_note_names = _NoteNames('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
+                         'F', ('F#', 'Gb'), 'G', ('G#', 'Ab'), 'A',
+                         ('A#', 'Bb'), 'B')
 
 
 note_regex = "[A-G][#b]?"
