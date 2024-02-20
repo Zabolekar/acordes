@@ -1,5 +1,5 @@
 from __future__ import annotations
-from functools import lru_cache
+import re
 
 
 class _NoteNames:
@@ -29,24 +29,44 @@ _note_names = _NoteNames('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
                          ('A#', 'Bb'), 'B')
 
 
-note_regex = "[A-G][#b]?"
+note_name_regex = r"[A-G][#b]?"
+
+note_regex = re.compile(fr"({note_name_regex})(-?\d+)?")
 
 
 class Note:
-    def __init__(self, note_name: str):
-        self._index = _note_names.index(note_name)
+    """
+    Represents either an absolute-pitched note or an octave-invariant note.
+    `pitch_class` is the index of the note inside an octave (C = 0, C# = 1, ..., B = 11).
+    `octave` is the octave number for an absolute note or `None` for an octave-invariant note.
+    """
+    def __init__(self, name: str):
+        if match := note_regex.match(name):
+            note_name, octave_name = match.groups()
+            self.pitch_class = _note_names.index(note_name)
+            self.octave = int(octave_name) if octave_name is not None else None
+        else:
+            raise ValueError(f"Can't parse note {name}")
 
     @staticmethod
-    def _from_int(index: int) -> Note:
+    def _from_pitch_class_and_octave(pitch_class: int, octave: int|None) -> Note:
         note = Note.__new__(Note)
-        note._index = index % 12
+        note.pitch_class = pitch_class
+        note.octave = octave
         return note
 
     def __repr__(self) -> str:
-        return _note_names[self._index]
+        if self.octave is not None:
+            return f'{_note_names[self.pitch_class]}{self.octave}'
+        else:
+            return _note_names[self.pitch_class]
 
     def __eq__(self, other) -> bool:
-        return self._index == other._index
+        return self.octave == other.octave and self.pitch_class == other.pitch_class
 
     def __add__(self, interval: int) -> Note:
-        return Note._from_int(self._index + interval)
+        pitch = self.pitch_class + interval
+        if self.octave is not None:
+            return Note._from_pitch_class_and_octave(pitch % 12, self.octave + pitch // 12)
+        else:
+            return Note._from_pitch_class_and_octave(pitch % 12, None)
