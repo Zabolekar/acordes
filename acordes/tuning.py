@@ -58,8 +58,9 @@ _subscript = str.maketrans(
     '₋₀₁₂₃₄₅₆₇₈₉')
 
 
-def _colored(string: str, color: int) -> str:
-    return f'{_colors[color % len(_colors)]}{string}{_color_end}'
+def _colored(text: str, color: int) -> str:
+    color_start = _colors[color % len(_colors)]
+    return color_start + text + _color_end
 
 
 def _format_fret(note: Note|None, root_note: Note) -> str:
