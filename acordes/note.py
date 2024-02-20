@@ -55,9 +55,6 @@ class Note:
         note.octave = octave
         return note
 
-    def to_octave_invariant(self) -> Note:
-        return Note._from_pitch_class_and_octave(self.pitch_class, None)
-
     def __repr__(self) -> str:
         if self.octave is not None:
             return f'{_note_names[self.pitch_class]}{self.octave}'
