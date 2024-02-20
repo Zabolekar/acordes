@@ -2,9 +2,10 @@ from acordes import Tuning
 
 
 ukulele = Tuning('GCEA')
-charango = Tuning('GCEAE')
+charango = Tuning('G4C5E4A4E5')
 rajao = Tuning('DGCEA')
-timple = Tuning('GCEAD')
+timple = Tuning('G4C5E4A4D5')
+guitar = Tuning('E2A2D3G3B3E4')
 
 
 if __name__ == '__main__':
@@ -16,3 +17,5 @@ if __name__ == '__main__':
     print("Rajão:")
     rajao('A')
     rajao('Am7')
+    print("Guitar:")
+    guitar('E')

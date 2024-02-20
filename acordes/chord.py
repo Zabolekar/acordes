@@ -1,5 +1,5 @@
 import re
-from .note import Note, note_regex
+from .note import Note, note_name_regex
 
 
 # intervals in semitones:
@@ -19,7 +19,7 @@ suffix_meanings = {
 }
 
 
-chord_regex = re.compile(fr"({note_regex})(.*)$")
+chord_regex = re.compile(fr"({note_name_regex})(.*)$")
 
 
 class Chord:
@@ -36,4 +36,4 @@ class Chord:
             self.notes.append(root + interval)
 
     def __repr__(self) -> str:
-        return f"{self.name} = <{' '.join(f'{n}' for n in self.notes)}>"
+        return f"{self.name} = <{' '.join(f'{n.note_name}' for n in self.notes)}>"

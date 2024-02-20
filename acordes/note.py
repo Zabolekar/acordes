@@ -1,5 +1,5 @@
 from __future__ import annotations
-from functools import lru_cache
+import re
 
 
 class _NoteNames:
@@ -29,24 +29,51 @@ _note_names = _NoteNames('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
                          ('A#', 'Bb'), 'B')
 
 
-note_regex = "[A-G][#b]?"
+note_name_regex = r"[A-G][#b]?"
+
+note_regex = re.compile(fr"({note_name_regex})(-?\d+)?")
 
 
 class Note:
-    def __init__(self, note_name: str):
-        self._index = _note_names.index(note_name)
+    def __init__(self, name: str):
+        if match := note_regex.match(name):
+            note_name, octave_name = match.groups()
+            note_index = _note_names.index(note_name)
+            octave = int(octave_name) if octave_name is not None else 4
+            # MIDI-compatible pitch value
+            self.pitch = (1 + octave) * 12 + note_index
+        else:
+            raise ValueError(f"Can't parse note {name}")
+
+    @property
+    def note_index(self) -> int:
+        return self.pitch % 12
+
+    @property
+    def note_name(self) -> str:
+        return _note_names[self.note_index]
+
+    @property
+    def octave(self) -> int:
+        return self.pitch // 12 - 1
 
     @staticmethod
-    def _from_int(index: int) -> Note:
+    def _from_pitch(pitch: int) -> Note:
         note = Note.__new__(Note)
-        note._index = index % 12
+        note.pitch = pitch
         return note
 
     def __repr__(self) -> str:
-        return _note_names[self._index]
+        return f'{self.note_name}{self.octave}'
+    
+    def is_octave_equivalent_to(self, other) -> bool:
+        return self.note_index == other.note_index
 
     def __eq__(self, other) -> bool:
-        return self._index == other._index
+        return self.pitch == other.pitch
 
     def __add__(self, interval: int) -> Note:
-        return Note._from_int(self._index + interval)
+        return Note._from_pitch(self.pitch + interval)
+    
+    def __sub__(self, other: Note) -> int:
+        return self.pitch - other.pitch
