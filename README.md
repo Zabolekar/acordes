@@ -36,7 +36,7 @@ Supported chord descriptions are (examples with C as the root note):
 - with three notes: C, Cm
 - with four notes: C7, CM7, Cm7, CmM7
 
-If octave numbers are presrnt in the tuning, the notes in the output are colored so that notes of the same color form a non-inverted chord.
+If octave numbers are present in the tuning, the notes in the output are colored so that notes of the same color form a non-inverted chord.
 
 # Development
 
