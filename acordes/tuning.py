@@ -15,12 +15,12 @@ class Tuning:
     def __repr__(self) -> str:
         return self._repr
 
-    def _fretted_strings(self, chord_note_indices: set[int]) -> Iterator[list[Note|None]]:
+    def _fretted_strings(self, chord_pitch_classes: set[int]) -> Iterator[list[Note|None]]:
         for open_string in self.open_strings:
             fretted_string: list[Note|None] = []
             for fret in range(13):  # after an octave it just repeats anyway
                 note = open_string + fret
-                if note.note_index in chord_note_indices:
+                if note.pitch_class in chord_pitch_classes:
                     fretted_string.append(note)
                 else:
                     fretted_string.append(None)
@@ -34,8 +34,8 @@ class Tuning:
         print(f" {chord} ".center(13 * 4 - 1, '-'))
         print(''.join(f"{i:<4}" for i in range(13)))
         root_note = chord.notes[0]
-        chord_note_indices = set(n.note_index for n in chord.notes)
-        fretted_strings = self._fretted_strings(chord_note_indices)
+        chord_pitch_classes = set(n.pitch_class for n in chord.notes)
+        fretted_strings = self._fretted_strings(chord_pitch_classes)
         rows = [_format_row(notes, root_note) for notes in fretted_strings]
         for row in reversed(rows):
             print(row)
@@ -65,8 +65,11 @@ def _colored(string: str, color: int) -> str:
 def _format_fret(note: Note|None, root_note: Note) -> str:
     if note is not None:
         text = f'{note}'.translate(_subscript)
-        color = (note - root_note) // 12
-        return _colored(f"{text:4}", color)
+        if note.octave is not None:
+            color = (note.octave * 12 + note.pitch_class - root_note.pitch_class) // 12
+            return _colored(f"{text:4}", color)
+        else:
+            return f"{text:4}"
     else:
         return '.   '
 

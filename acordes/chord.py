@@ -36,4 +36,4 @@ class Chord:
             self.notes.append(root + interval)
 
     def __repr__(self) -> str:
-        return f"{self.name} = <{' '.join(f'{n.note_name}' for n in self.notes)}>"
+        return f"{self.name} = <{' '.join(f'{n}' for n in self.notes)}>"

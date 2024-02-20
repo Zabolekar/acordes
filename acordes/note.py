@@ -35,45 +35,41 @@ note_regex = re.compile(fr"({note_name_regex})(-?\d+)?")
 
 
 class Note:
+    """
+    Represents either an absolute-pitched note or an octave-invariant note.
+    `pitch_class` is the index of the note inside an octave (C = 0, C# = 1, ..., B = 11).
+    `octave` is the octave number for an absolute note or `None` for an octave-invariant note.
+    """
     def __init__(self, name: str):
         if match := note_regex.match(name):
             note_name, octave_name = match.groups()
-            note_index = _note_names.index(note_name)
-            octave = int(octave_name) if octave_name is not None else 4
-            # MIDI-compatible pitch value
-            self.pitch = (1 + octave) * 12 + note_index
+            self.pitch_class = _note_names.index(note_name)
+            self.octave = int(octave_name) if octave_name is not None else None
         else:
             raise ValueError(f"Can't parse note {name}")
 
-    @property
-    def note_index(self) -> int:
-        return self.pitch % 12
-
-    @property
-    def note_name(self) -> str:
-        return _note_names[self.note_index]
-
-    @property
-    def octave(self) -> int:
-        return self.pitch // 12 - 1
-
     @staticmethod
-    def _from_pitch(pitch: int) -> Note:
+    def _from_pitch_class_and_octave(pitch_class: int, octave: int|None) -> Note:
         note = Note.__new__(Note)
-        note.pitch = pitch
+        note.pitch_class = pitch_class
+        note.octave = octave
         return note
 
+    def to_octave_invariant(self) -> Note:
+        return Note._from_pitch_class_and_octave(self.pitch_class, None)
+
     def __repr__(self) -> str:
-        return f'{self.note_name}{self.octave}'
-    
-    def is_octave_equivalent_to(self, other) -> bool:
-        return self.note_index == other.note_index
+        if self.octave is not None:
+            return f'{_note_names[self.pitch_class]}{self.octave}'
+        else:
+            return _note_names[self.pitch_class]
 
     def __eq__(self, other) -> bool:
-        return self.pitch == other.pitch
+        return self.octave == other.octave and self.pitch_class == other.pitch_class
 
     def __add__(self, interval: int) -> Note:
-        return Note._from_pitch(self.pitch + interval)
-    
-    def __sub__(self, other: Note) -> int:
-        return self.pitch - other.pitch
+        pitch = self.pitch_class + interval
+        if self.octave is not None:
+            return Note._from_pitch_class_and_octave(pitch % 12, self.octave + pitch // 12)
+        else:
+            return Note._from_pitch_class_and_octave(pitch % 12, None)
