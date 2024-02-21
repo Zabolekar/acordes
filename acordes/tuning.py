@@ -46,11 +46,11 @@ _color_end = '\033[0m'
 
 _colors = [
     '\033[31m',  # red
-    '\033[33m',  # yellow
     '\033[32m',  # green
-    '\033[36m',  # cyan
     '\033[34m',  # blue
+    '\033[33m',  # yellow
     '\033[35m',  # magenta
+    '\033[36m',  # cyan
 ]
 
 _subscript = str.maketrans(
