@@ -24,9 +24,14 @@ class _NoteNames:
         return self._names[i]
 
 
-_note_names = _NoteNames('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
-                         'F', ('F#', 'Gb'), 'G', ('G#', 'Ab'), 'A',
-                         ('A#', 'Bb'), 'B')
+_note_names = _NoteNames(
+    'C', ('C#', 'Db'),
+    'D', ('D#', 'Eb'),
+    'E',
+    'F', ('F#', 'Gb'),
+    'G', ('G#', 'Ab'),
+    'A', ('A#', 'Bb'),
+    'B')
 
 
 note_name_regex = r"[A-G][#b]?"
