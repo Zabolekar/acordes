@@ -100,7 +100,7 @@ def _format_fret(fret: Fret, options: FormattingOptions) -> str:
         text = f'{fret.note}'
         match options.octave_numbers:
             case OctaveNumbers.NONE:
-                text = re.sub('[0-9]', text, '')
+                text = re.sub('\d', '', text)
             case OctaveNumbers.SUBSCRIPT:
                 text = text.translate(_subscript)
         text = _fixed_width(text, options.fret_width)
