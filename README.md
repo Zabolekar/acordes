@@ -32,9 +32,9 @@ Supported tuning descriptions are:
 - mix of the two: `G4 C5 E A4 E5`
 
 Supported chord descriptions are (examples with C as the root note):
-- with two notes: C5, C(no5), Cm(no5)
-- with three notes: C, Cm
-- with four notes: C7, CM7, Cm7, CmM7
+- with two notes: Cm(no5), C(no5), C5
+- with three notes: Cdim, Csus2, C, Cm, Csus4, Caug
+- with four notes: Cm6, C6, Cm7, CmM7, C7, CM7
 
 If octave numbers are present in the tuning, the notes in the output are colored so that notes of the same color form a non-inverted chord.
 
