@@ -31,6 +31,9 @@ Supported tuning descriptions are:
 - octave-invariant notes: `G C E A`
 - mix of the two: `G4 C5 E A4 E5`
 
+Octave-doubled strings are not supported. As a workaround, they can be notated
+without an octave or with only one of their octaves.
+
 Supported chord descriptions are (examples with C as the root note):
 - with two notes: Cm(no5), C(no5), C5
 - with three notes: Cdim, Csus2, C, Cm, Csus4, Caug
@@ -39,6 +42,62 @@ Supported chord descriptions are (examples with C as the root note):
 If octave numbers are present in the tuning, the notes in the output are colored
 so that notes of the same color form a non-inverted chord. The color palette can
 be configured in the `colors.json` file.
+
+The `instruments` module contains a few predefined tunings. For some instruments,
+there is only one tuning, for some there are many:
+
+```pycon
+from acordes.instruments import balalaika
+>>> from acordes.instruments import balalaika
+>>> balalaika.academic("Em")
+------------------- Em = <E G B> -------------------
+0   1   2   3   4   5   6   7   8   9   10  11  12  
+.   .   B₄  .   .   .   .   E₅  .   .   G₅  .   .   
+E₄  .   .   G₄  .   .   .   B₄  .   .   .   .   E₅  
+E₄  .   .   G₄  .   .   .   B₄  .   .   .   .   E₅  
+----------------------------------------------------
+>>> balalaika.folk("Em")
+------------------- Em = <E G B> -------------------
+0   1   2   3   4   5   6   7   8   9   10  11  12  
+G₄  .   .   .   B₄  .   .   .   .   E₅  .   .   G₅  
+E₄  .   .   G₄  .   .   .   B₄  .   .   .   .   E₅  
+.   .   .   .   E₄  .   .   G₄  .   .   .   B₄  .   
+----------------------------------------------------
+```
+
+It's often hard to decide whether a tuning is *the* tuning for some instrument.
+The list is incomplete and subjective. It's intended to be a helper, not a database.
+Still, if you see something obviously wrong, please report it.
+
+There is also an optional `fret_count` argument:
+
+```
+In [1]: from acordes.instruments import vihuela, semistrunka
+
+In [2]: semistrunka("C", fret_count=21)
+------------------------------------- C = <C E G> --------------------------------------
+0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  
+.   .   E₄  .   .   G₄  .   .   .   .   C₅  .   .   .   E₅  .   .   G₅  .   .   .   .   
+.   C₄  .   .   .   E₄  .   .   G₄  .   .   .   .   C₅  .   .   .   E₅  .   .   G₅  .   
+G₃  .   .   .   .   C₄  .   .   .   E₄  .   .   G₄  .   .   .   .   C₅  .   .   .   E₅  
+.   .   E₃  .   .   G₃  .   .   .   .   C₄  .   .   .   E₄  .   .   G₄  .   .   .   .   
+.   C₃  .   .   .   E₃  .   .   G₃  .   .   .   .   C₄  .   .   .   E₄  .   .   G₄  .   
+G₂  .   .   .   .   C₃  .   .   .   E₃  .   .   G₃  .   .   .   .   C₄  .   .   .   E₄  
+.   .   E₂  .   .   G₂  .   .   .   .   C₃  .   .   .   E₃  .   .   G₃  .   .   .   .   
+----------------------------------------------------------------------------------------
+
+In [3]: vihuela("C", 7)
+--------- C = <C E G> ----------
+0   1   2   3   4   5   6   7   
+E₄  .   .   G₄  .   .   .   .   
+.   C₄  .   .   .   E₄  .   .   
+G₄  .   .   .   .   C₅  .   .   
+.   .   E₄  .   .   G₄  .   .   
+.   .   .   C₄  .   .   .   E₄  
+--------------------------------
+```
+
+![output2](images/output2.png)
 
 # Development
 
