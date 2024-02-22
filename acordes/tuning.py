@@ -54,8 +54,8 @@ _colors = [
 ]
 
 _subscript = str.maketrans(
-    '-0123456789',
-    '₋₀₁₂₃₄₅₆₇₈₉')
+    '0123456789',
+    '₀₁₂₃₄₅₆₇₈₉')
 
 
 def _colored(text: str, color: int) -> str:

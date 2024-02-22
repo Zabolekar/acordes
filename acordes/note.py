@@ -31,14 +31,14 @@ _note_names = _NoteNames('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
 
 note_name_regex = r"[A-G][#b]?"
 
-note_regex = re.compile(fr"({note_name_regex})(-?\d+)?")
+note_regex = re.compile(fr"({note_name_regex})(\d)?")
 
 
 class Note:
     """
     Represents either an absolute-pitched note or an octave-invariant note.
     `pitch_class` is the index of the note inside an octave (C = 0, C# = 1, ..., B = 11).
-    `octave` is the octave number for an absolute note or `None` for an octave-invariant note.
+    `octave` is the octave number (from 0 to 9) for an absolute note or `None` for an octave-invariant note.
     """
     def __init__(self, name: str):
         if match := note_regex.match(name):
