@@ -1,8 +1,14 @@
 from typing import Iterator
+import os
+import json
+
 from .chord import Chord
 from .note import Note, note_regex
 from .fret import Fret
-from .formatting import FormattingOptions, format_fretboard
+from .formatting import FormattingOptions, default_formatting_options, format_fretboard
+
+
+OPTIONS_FILE = 'options.json'
 
 
 def _parse_tuning(description: str) -> list[Note]:
@@ -28,8 +34,7 @@ class Tuning:
                     fretted_string.append(None)
             yield fretted_string
 
-    def get_fretboard(self, chord: Chord, fret_count: int=12) -> list[list[Fret]]:
-        # TODO: Concider a dedicated class for fretboards
+    def _get_fretboard(self, chord: Chord, fret_count: int) -> list[list[Fret]]:
         root_note = chord.notes[0]
         chord_pitch_classes = set(n.pitch_class for n in chord.notes)
         fretted_strings = self._fretted_strings(chord_pitch_classes, fret_count)
@@ -48,13 +53,17 @@ class Tuning:
 
         return fretboard
 
-    def __call__(self, chord_name: str, options: FormattingOptions|None=None) -> None:
+    def __call__(self, chord_name: str, fret_count: int=12) -> None:
         """
         Print the fret diagram.
         """
-        if options is None:
-            options = FormattingOptions()
+        if os.path.exists(OPTIONS_FILE):
+            with open(OPTIONS_FILE, 'r') as file:
+                options = json.load(file, object_hook=FormattingOptions._object_hook)
+        else:
+            options = default_formatting_options
+
         chord = Chord(chord_name)
-        fretboard = self.get_fretboard(chord, options.fret_count)
-        formatted = format_fretboard(chord, fretboard, options)
+        fretboard = self._get_fretboard(chord, fret_count)
+        formatted = format_fretboard(chord, fretboard, fret_count, options)
         print(formatted)
