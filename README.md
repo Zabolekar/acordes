@@ -36,7 +36,9 @@ Supported chord descriptions are (examples with C as the root note):
 - with three notes: Cdim, Csus2, C, Cm, Csus4, Caug
 - with four notes: Cm6, C6, Cm7, CmM7, C7, CM7
 
-If octave numbers are present in the tuning, the notes in the output are colored so that notes of the same color form a non-inverted chord.
+If octave numbers are present in the tuning, the notes in the output are colored
+so that notes of the same color form a non-inverted chord. The color palette can
+be configured in the `colors.json` file.
 
 # Development
 
