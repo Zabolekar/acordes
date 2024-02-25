@@ -18,7 +18,7 @@ class _NoteNames:
         try:
             return self._indices[value]
         except KeyError as e:
-            raise ValueError(f"{value!r} not in multituple") from e
+            raise ValueError(f"{value!r} is not a known note name") from e
 
     def __getitem__(self, i: int) -> str:
         return self._names[i]
