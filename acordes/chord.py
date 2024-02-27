@@ -25,14 +25,14 @@ suffix_meanings = {
 }
 
 
-chord_regex = re.compile(fr"({note_name_regex})(.*)$")
+chord_regex = re.compile(fr"({note_name_regex})(.*)")
 
 
 class Chord:
     def __init__(self, name: str):
         self.name, self.notes = name, []
 
-        if match := chord_regex.match(name):
+        if match := chord_regex.fullmatch(name):
             root_name, suffix = match.groups()
         else:
             raise ValueError(f"Can't parse chord {name}")

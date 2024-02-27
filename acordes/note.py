@@ -17,7 +17,7 @@ _note_index_by_name = {name: i for i, names in enumerate(_note_names) for name i
 
 note_name_regex = r"[A-G][#b]?"
 
-note_regex = re.compile(fr"({note_name_regex})(\d)?")
+note_regex = re.compile(fr"({note_name_regex})(\d)?")  # note name, then octave number
 
 
 class Note:
@@ -27,7 +27,7 @@ class Note:
     `octave` is the octave number (from 0 to 9) for an absolute note or `None` for an octave-invariant note.
     """
     def __init__(self, name: str):
-        if match := note_regex.match(name):
+        if match := note_regex.fullmatch(name):
             note_name, octave_name = match.groups()
             self.pitch_class = _note_index_by_name[note_name]
             self.octave = int(octave_name) if octave_name is not None else None
