@@ -2,31 +2,17 @@ from __future__ import annotations
 import re
 
 
-class _NoteNames:
-    def __init__(self, *values: str|tuple[str, ...]):
-        self._names: list[str] = []
-        self._indices: dict[str, int] = {}
-        for i, value in enumerate(values):
-            if isinstance(value, tuple):
-                self._names.append(value[0])  # empty tuples not allowed here
-                self._indices |= {name: i for name in value}
-            else:
-                self._names.append(value)
-                self._indices[value] = i
+_note_names = [
+    ['C'], ['C#', 'Db'],
+    ['D'], ['D#', 'Eb'],
+    ['E'],
+    ['F'], ['F#', 'Gb'],
+    ['G'], ['G#', 'Ab'],
+    ['A'], ['A#', 'Bb'],
+    ['B'],
+]
 
-    def index(self, value: str) -> int:
-        try:
-            return self._indices[value]
-        except KeyError as e:
-            raise ValueError(f"{value!r} is not a known note name") from e
-
-    def __getitem__(self, i: int) -> str:
-        return self._names[i]
-
-
-_note_names = _NoteNames('C', ('C#', 'Db'), 'D', ('D#', 'Eb'), 'E',
-                         'F', ('F#', 'Gb'), 'G', ('G#', 'Ab'), 'A',
-                         ('A#', 'Bb'), 'B')
+_note_index_by_name = {name: i for i, names in enumerate(_note_names) for name in names}
 
 
 note_name_regex = r"[A-G][#b]?"
@@ -43,7 +29,7 @@ class Note:
     def __init__(self, name: str):
         if match := note_regex.match(name):
             note_name, octave_name = match.groups()
-            self.pitch_class = _note_names.index(note_name)
+            self.pitch_class = _note_index_by_name[note_name]
             self.octave = int(octave_name) if octave_name is not None else None
         else:
             raise ValueError(f"Can't parse note {name}")
@@ -56,10 +42,11 @@ class Note:
         return note
 
     def __repr__(self) -> str:
+        note_name = _note_names[self.pitch_class][0]
         if self.octave is not None:
-            return f'{_note_names[self.pitch_class]}{self.octave}'
+            return f'{note_name}{self.octave}'
         else:
-            return _note_names[self.pitch_class]
+            return note_name
 
     def __eq__(self, other) -> bool:
         return self.octave == other.octave and self.pitch_class == other.pitch_class
