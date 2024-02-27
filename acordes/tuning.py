@@ -16,10 +16,11 @@ def _parse_tuning(description: str) -> Iterator[Note]:
 
 class Tuning:
     def __init__(self, description: str):
-        self._repr = f'Tuning("{description}")'
         self.open_strings = list(_parse_tuning(description))
         if not self.open_strings:
             raise ValueError("at least one open string required")
+        normalized_description = " ".join(repr(note) for note in self.open_strings)
+        self._repr = f'Tuning("{normalized_description}")'
 
     def __repr__(self) -> str:
         return self._repr
