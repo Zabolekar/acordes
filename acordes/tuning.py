@@ -1,25 +1,25 @@
 from typing import Iterator
 import re
 from .chord import Chord
-from .note import Note, note_regex
+from .note import Note
 from .formatting import print_fretboard
 
-_tuning_regex = re.compile(fr"\s*({note_regex.pattern}\s*)*$")
+
+_split_regex = re.compile(r"\s+|(?=[A-Z])")  # split by whitespace or before uppercase letters
 
 
-def _parse_tuning(description: str) -> list[Note]:
-    if _tuning_regex.match(description) is None:
-        raise ValueError(f"can't parse tuning {description}")
-    open_strings = [Note(match.group()) for match in note_regex.finditer(description)]
-    if not open_strings:
-        raise ValueError("at least one open string required")
-    return open_strings
+def _parse_tuning(description: str) -> Iterator[Note]:    
+    for token in _split_regex.split(description):
+        if token != "":
+            yield Note(token)
 
 
 class Tuning:
     def __init__(self, description: str):
         self._repr = f'Tuning("{description}")'
-        self.open_strings = _parse_tuning(description)
+        self.open_strings = list(_parse_tuning(description))
+        if not self.open_strings:
+            raise ValueError("at least one open string required")
 
     def __repr__(self) -> str:
         return self._repr
