@@ -37,7 +37,7 @@ class Note:
             self.pitch_class = _note_index_by_name[note_name]
             self.octave = int(octave_name) if octave_name is not None else None
         else:
-            raise ValueError(f"Can't parse note {name}")
+            raise ValueError(f"can't parse note {name}")
 
     @staticmethod
     def _from_pitch_class_and_octave(pitch_class: int, octave: int|None) -> Note:
