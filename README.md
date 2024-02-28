@@ -101,6 +101,10 @@ G₄  .   .   .   .   C₅  .   .
 
 # Development
 
-Check types: `mypy acordes`
+Install (you should create an environment first): `pip install -e .`
 
-Run tests: `python test.py`
+Check types: `mypy`
+
+Run a quick informal test: `python -m acordes.example`
+
+Run formal tests: `pytest`

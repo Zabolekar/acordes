@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/acordes/__init__.py
+src/acordes/chord.py
+src/acordes/formatting.py
+src/acordes/instruments.py
+src/acordes/note.py
+src/acordes/tuning.py
+src/acordes.egg-info/PKG-INFO
+src/acordes.egg-info/SOURCES.txt
+src/acordes.egg-info/dependency_links.txt
+src/acordes.egg-info/top_level.txt
+tests/test_hm.py

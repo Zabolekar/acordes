@@ -35,9 +35,12 @@ class Chord:
         if match := chord_regex.fullmatch(name):
             root_name, suffix = match.groups()
         else:
-            raise ValueError(f"Can't parse chord {name}")
+            raise ValueError(f"can't parse chord {name}")
 
         root = Note(root_name)
+        if suffix not in suffix_meanings:
+            raise ValueError(f"can't parse chord suffix {suffix}")
+        
         for interval in suffix_meanings[suffix]:
             self.notes.append(root + interval)
 
