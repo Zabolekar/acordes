@@ -1,0 +1,3 @@
+- find finger positions
+- chords larger than octave, like C9 and Cadd9 (but first decide how to color them)
+- tunings with octave-doubled strings (notation e.g. "<E5E4>"?)
