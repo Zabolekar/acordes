@@ -1,4 +1,6 @@
-"Acordes" means "chords" in Spanish and Portuguese. It will help you determine how to play a chord on a stringed instrument. There are many sites dedicated to guitar or ukulele chords, but for some other instruments, chord tables are harder to find.
+This package will help you determine how to play a chord on a stringed instrument. There are many sites dedicated to guitar or ukulele chords, but for some other instruments, chord tables are harder to find.
+
+"Acordes" means "chords" in Spanish and Portuguese. Some of the possible pronunciations are [aˈkɔɦ.ʤis] (Brazilian Portuguese), [ɐˈkɔɾ.ðɨʃ] (European Portuguese), [aˈkoɾ.ðes] (Spanish).
 
 # Usage
 
