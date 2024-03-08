@@ -3,20 +3,17 @@ from .chord import Chord
 from .note import Note
 
 
-_color_codes = {
-    'red'     : '\033[31m',
-    'green'   : '\033[32m',
-    'yellow'  : '\033[33m',
-    'blue'    : '\033[34m',
-    'magenta' : '\033[35m',
-    'cyan'    : '\033[36m'
-}
+_colors = [
+    '\033[31m',  # red
+    '\033[32m',  # green
+    '\033[34m',  # blue, before yellow for better contrast between adjacent colors
+    '\033[33m',  # yellow
+    '\033[35m',  # magenta
+    '\033[36m'   # cyan
+]
 
 
 _color_end = '\033[0m'
-
-
-colors = ['red', 'green', 'blue', 'yellow', 'magenta', 'cyan']
 
 
 _subscript = str.maketrans(
@@ -25,7 +22,7 @@ _subscript = str.maketrans(
 
 
 def _colored(text: str, color: str) -> str:
-    return _color_codes[color] + text + _color_end
+    return color + text + _color_end
 
 
 def _format_fret(note: Note|None, root_note: Note) -> str:
@@ -39,7 +36,7 @@ def _format_fret(note: Note|None, root_note: Note) -> str:
 
     # notes inside a single group form a non-inverted chord
     group = (note.octave * 12 + note.pitch_class - root_note.pitch_class) // 12
-    color = colors[group % len(colors)]
+    color = _colors[group % len(_colors)]
     return _colored(text, color)
 
 
