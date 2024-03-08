@@ -42,8 +42,7 @@ Supported chord descriptions are (examples with C as the root note):
 - with four notes: Cm6, C6, Cm7, CmM7, C7, CM7
 
 If octave numbers are present in the tuning, the notes in the output are colored
-so that notes of the same color form a non-inverted chord. The color palette can
-be configured in the `colors.json` file.
+so that notes of the same color form a non-inverted chord.
 
 The `instruments` module contains a few predefined tunings. For some instruments,
 there is only one tuning, for some there are many:
