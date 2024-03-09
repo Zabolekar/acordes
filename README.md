@@ -109,3 +109,7 @@ Check types: `mypy`
 Run a quick informal test: `python -m acordes.example`
 
 Run formal tests: `pytest`
+
+# Related Projects
+
+A browser version by [formicant](https://github.com/formicant/) can be found [here](https://formicant.github.io/Griffbrett/), its source code [here](https://github.com/formicant/Griffbrett/).
