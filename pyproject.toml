@@ -1,3 +1,17 @@
 [project]
 name = "acordes"
-version = "0.0.2"
+version = "1.0.0"
+authors = [
+  { name="Stanislav Syekirin", email="syekirin@gmail.com" },
+]
+description = "how to play a chord on a stringed instrument"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/Zabolekar/acordes"

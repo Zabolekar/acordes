@@ -2,6 +2,25 @@ This package will help you determine how to play a chord on a stringed instrumen
 
 "Acordes" means "chords" in Spanish and Portuguese. Some of the possible pronunciations are [aˈkɔɦ.ʤis] (Brazilian Portuguese), [ɐˈkɔɾ.ðɨʃ] (European Portuguese), [aˈkoɾ.ðes] (Spanish).
 
+# Installation
+
+You need Python 3.10 or later. Create a virtual environment with a tool of your choice, *for example*:
+
+```sh
+python3 -m venv ~/venvs/acordes
+```
+
+Then install the package with `pip install acordes`.
+
+For convenient interactive usage, add a snippet to your shell configuration file (e.g. `.bashrc` if you use Bash), *for example*:
+
+```bash
+acordes () {
+    . ~/venvs/acordes/bin/activate
+    python -i -c 'from acordes import *'
+}
+```
+
 # Usage
 
 ```pycon
