@@ -2,18 +2,23 @@ from typing import Iterator
 from .chord import Chord
 from .note import Note
 
+from colorama import just_fix_windows_console, Fore, Style
+
+
+just_fix_windows_console()
+
 
 _colors = [
-    '\033[31m',  # red
-    '\033[32m',  # green
-    '\033[34m',  # blue, before yellow for better contrast between adjacent colors
-    '\033[33m',  # yellow
-    '\033[35m',  # magenta
-    '\033[36m'   # cyan
+    Fore.RED,
+    Fore.GREEN,
+    Fore.BLUE,  # blue before yellow for better contrast between adjacent colors
+    Fore.YELLOW,
+    Fore.MAGENTA,
+    Fore.CYAN
 ]
 
 
-_color_end = '\033[0m'
+_color_end = Style.RESET_ALL
 
 
 _subscript = str.maketrans(
