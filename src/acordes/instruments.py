@@ -16,6 +16,7 @@ charango = Tuning("G4 C5 E A4 E5")
 
 cavaquinho = SimpleNamespace(
     ggbd = Tuning("G4 G4 B4 D5"),  # Portugal
+    cgad = Tuning("C5 G4 A4 D5"),  # Portugal
     dabe = Tuning("D5 A4 B4 E5"),  # Portugal
     dgbd = braguinha,              # Brazil, tuning is the same as that of Madeiran braguinha
     dgbe = Tuning("D4 G4 B4 E5"))  # Brazil
