@@ -50,6 +50,7 @@ timple = Tuning("G4 C5 E4 A4 D5")
 ukulele = SimpleNamespace(
     high_g = Tuning("G4 C4 E4 A4"),
     low_g = Tuning("G3 C4 E4 A4"),
+    d6 = Tuning("A4 D4 F#4 B4"),
     baritone = Tuning("D3 G3 B3 E4"))
 
 vihuela = Tuning("A3 D4 G4 B3 E4")  # modern mexican vihuela
