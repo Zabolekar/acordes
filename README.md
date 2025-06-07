@@ -17,7 +17,8 @@ For convenient interactive usage, add a snippet to your shell configuration file
 ```bash
 acordes () {
     . ~/venvs/acordes/bin/activate
-    python -i -c 'from acordes import *'
+    python -i -c 'from acordes import *
+from acordes.instruments import *'
 }
 ```
 
